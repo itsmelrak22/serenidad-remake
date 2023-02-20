@@ -20,9 +20,26 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <?php include('includes/restrictionsInfo.php') ?>
+        <?php include('includes/usersModal.php') ?>
+
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h1 class="h2">Users</h1>
-          </div>
+        </div>
+
+        <div class="mb-1">
+            <?php
+                if($_SESSION['login-restriction'] == 'admin'){
+                    echo '<a href="#" data-toggle="modal" data-target="#addUserModal">
+                            <button class="btn btn-success " data-toggle="tooltip" data-placement="top" title="Add">
+                                <i class="fas fa-plus"></i>
+                                Add User
+                            </button>
+                        </a>';
+                }
+            ?>
+        </div>
 
         <table id="datatable" class="display">
 			<thead>
@@ -57,7 +74,7 @@
                                 }else{
                                     echo '
                                     <div class="form-inline">
-                                            <form action="queries/users_resource.php" method="post">
+                                            <form action="queries/userResource.php" method="post">
                                                 <input type="hidden" value="edit" name="resource_type">
                                                 <input type="hidden" value="'. $value['id'].'" name="user_id">
 
@@ -66,7 +83,7 @@
                                                 </button>
                                             </form>
 
-                                            <form action="queries/users_resource.php" method="post" class="ml-1">
+                                            <form action="queries/userResource.php" method="post" class="ml-1">
                                                     <input type="hidden" value="delete" name="resource_type">
                                                     <input type="hidden" value="'. $value['id'].'" name="user_id">
                                                     <button  type="submit" class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Delete">
