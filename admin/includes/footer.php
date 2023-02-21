@@ -89,7 +89,8 @@
                     'users.php', 
                     'rooms.php', 
                     'checkedout.php',
-                    'editReserved.php'
+                    'editReserved.php',
+                    'editRoom.php'
                 ]
           
           if(!except.includes(url[url.length - 1])){

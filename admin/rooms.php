@@ -41,14 +41,28 @@
     <div class="container-fluid">
       <div class="row">
 
-      <?php include('includes/sidebar.php') ?>
+        <?php include('includes/sidebar.php') ?>
+        <?php include('includes/roomsModal.php') ?>
 
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h1 class="h2">Rooms</h1>
-          </div>
+        </div>
+
+        <div class="mb-1">
+            <?php 
+                if($_SESSION['login-restriction'] == 'admin'){
+                    echo ' <a href="#" data-toggle="modal" data-target="#addRoomModal">
+                                <button class="btn btn-success " data-toggle="tooltip" data-placement="top" title="Add">
+                                    <i class="fas fa-plus"></i>
+                                    Add Room
+                                </button>
+                            </a>';
+                }
+            ?>
+        </div>
 
         <table id="datatable" class="display">
 			<thead>
@@ -78,7 +92,7 @@
                             if($_SESSION['login-restriction'] == 'admin'){
                                 echo '
                                     <div class="form-inline">
-                                            <form action="queries/rooms_resource.php" method="post">
+                                            <form action="queries/roomResources.php" method="post">
                                                 <input type="hidden" value="edit" name="resource_type">
                                                 <input type="hidden" value="'.$value['id'].'"  name="room_id">
                                                 <button type="submit" class="btn btn-warning"  data-toggle="tooltip" data-placement="top" title="Edit">
@@ -87,7 +101,7 @@
                                                 
                                             </form>
 
-                                            <form action="queries/rooms_resource.php" method="post" class="ml-1">
+                                            <form action="queries/roomResources.php" method="post" class="ml-1">
                                                 <input type="hidden" value="add-other-images" name="resource_type">
                                                 <input type="hidden" value="'.$value['id'].'"  name="room_id">
 
@@ -96,7 +110,7 @@
                                                 </button>
                                             </form>
 
-                                            <form action="queries/rooms_resource.php" method="post" class="ml-1">
+                                            <form action="queries/roomResources.php" method="post" class="ml-1">
                                                     <input type="hidden" value="delete" name="resource_type">
                                                     <input type="hidden" value="'.$value['id'].'" name="room_id">
                                                     <input value="'.$value['photo'].'" name="old_photo" type="hidden" class="form-control ">
