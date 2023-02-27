@@ -18,36 +18,32 @@
 
   <body class="text-center">
     <div class="container marketing">
-
         <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-        <header class="masthead mb-auto">
-            <div class="inner">
-            <h3 class="masthead-brand">Serenidad Suites Online</h3>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="index.php">Home</a>
-                <a class="nav-link" href="reservation.php">Rooms</a>
-                <a class="nav-link" href="#">About Us</a>
-                <a class="nav-link" href="#">Login</a>
-            </nav>
-            </div>
-        </header>
+          <header class="masthead mb-auto">
+              <div class="inner">
+              <h3 class="masthead-brand">Serenidad Suites Online</h3>
+              <nav class="nav nav-masthead justify-content-center">
+                  <a class="nav-link active" href="index.php">Home</a>
+                  <a class="nav-link" href="reservation.php">Rooms</a>
+                  <a class="nav-link" href="aboutUs.php">About Us</a>
+                  <a class="nav-link" href="client-login.php">Login</a>
+              </nav>
+              </div>
+          </header>
+          <main role="main" class="inner cover">
+              <h1 class="cover-heading">SERENIDAD SUITES @MATABUNGKAY BEACH</h1>  
+              <p class="lead">A home away from home, a “10 minute walk” to the beach.</p>
+              <p class="lead">
+              <a href="#" class="btn btn-lg btn-secondary">BOOK NOW !</a>
+              </p>
+          </main>
 
-        
+          
 
-        <main role="main" class="inner cover">
-            <h1 class="cover-heading">SERENIDAD SUITES @MATABUNGKAY BEACH</h1>  
-            <p class="lead">A home away from home, a “10 minute walk” to the beach.</p>
-            <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">BOOK NOW !</a>
-            </p>
-        </main>
-
-        
-
-        <footer class="mastfoot mt-auto">
-            <div class="inner">
-            </div>
-        </footer>
+          <footer class="mastfoot mt-auto">
+              <div class="inner">
+              </div>
+          </footer>
         </div>
 
         <!-- Three columns of text below the carousel -->
