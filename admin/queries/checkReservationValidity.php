@@ -5,7 +5,7 @@ spl_autoload_register(function ($class) {
 date_default_timezone_set('Asia/Manila');
 
 $connection = new Transaction();
-$transactions = $connection->getPendingTransactions();
+$transactions = $connection->getPendingAndTransactions();
 // $users = $connection->setQuery("SELECT * FROM `transactions`")->getAll();
 
 
