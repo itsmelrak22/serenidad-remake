@@ -125,3 +125,12 @@ body {
   margin-right: .75rem;
   margin-left: .75rem;
 }
+
+.accordion-title{
+  color: black;
+}
+
+.accordion-text{
+  color: black;
+  font-size: small;
+}

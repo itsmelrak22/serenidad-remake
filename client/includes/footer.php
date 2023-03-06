@@ -1,47 +1,73 @@
-  <?php
-    include_once('modals.php');
-  ?>
-  
-  <!-- Floating Action Button -->
-  <span  data-toggle="modal" data-target="#chatBotModal" >
-    <a href="#" class="float" data-toggle="tooltip" data-placement="left" title="Chat with us!">
-      <i class="my-float" data-feather="message-square"></i>
-    </a>
-  </span>
-  <!-- Floating Action Button -->
-    <!-- Bootstrap core JavaScript
+     <!-- Paypal SDK -->
+     <script src="https://www.paypal.com/sdk/js?client-id=Ad-DKICXtIrrhJRR4e7Bj1LMfHx1FKNPNf2rCWebJs3aX3Vv7HcNAwVHt8LMov7UJ2A7KRc3c_LrnM0z&currency=PHP&components=buttons,marks&debug=true&disable-funding=credit,card"></script>
+
+ 
+ 
+ <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="vendor/jquery-slim.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="../vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="vendor/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="vendor/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="../vendor/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
 
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="vendor/holder.min.js"></script>
+    <script src="../vendor/datepicker/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Data Tables -->
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        } );
+    </script>
+    <!-- Data Tables -->
+
+
+    <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()
     </script>
 
+    <!-- Graphs -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script> -->
 
-<script>
-        const roomsForOtherImages = <?php echo json_encode($roomDatas) ?>;
+    <script>
         let roomCheckinDates = [];
         let tempRoomCheckinDates = [];
         let rooms = [];
         let daysOfCheckin = 0;
         let selectedRoom = {}
-        let room_id = 1;
-
-        function clearFields(id){
-            const field = document.getElementById(id)
-            field.value = '';
-        }
-        
 
         $('.datepicker-checkin').datepicker({
             clearBtn: true,
@@ -56,61 +82,177 @@
             startDate: new Date(),
             datesDisabled: roomCheckinDates
         }); //> date picker
+    //   window.addEventListener ('load', function () {
 
-        window.addEventListener ('load', function () {
-            getRooms();
-            checkRoomAvailability()
-        }, false);
+    //         let url = window.location.href;
+    //         url = url.split('/');
 
-        function getOtherImage(id){
-            const roomOtherImage = roomsForOtherImages.find(res => res.id == id).other_images;
-            const indicator = document.getElementById('carousel-indicators');
-            const inner = document.getElementById('carousel-inner');
+    //         const except = [
+    //                 'reserved.php', 
+    //                 'checkedin.php', 
+    //                 'confirmCheckout.php', 
+    //                 'users.php', 
+    //                 'rooms.php', 
+    //                 'checkedout.php',
+    //                 'editReserved.php',
+    //                 'editRoom.php'
+    //             ]
+          
+    //       if(!except.includes(url[url.length - 1])){
+    //         getRooms();
+    //         checkRoomAvailability()
+    //       }
 
-            indicator.innerHTML = '';
-            inner.innerHTML = '';
 
-            roomOtherImage.forEach((el, key) => {
-                console.log(el)
-                let node = document.createElement("li");
-                let att1 = document.createAttribute("data-target");
-                let att2 = document.createAttribute("data-slide-to");
-                if(key == 0){
-                    let active = document.createAttribute("class");
-                    active.value = 'active'
-                    node.setAttributeNode(active)
+    //       // getTransactions();
+    //       // setInterval (getTransactions, 300000); // 5 mins
+    //       // setInterval (checkReservationValidity, 300000); // 5 mins
 
-                }
-                att1.value = '#carouselExampleIndicators'
-                att2.value = key
-                node.setAttributeNode(att1)
-                node.setAttributeNode(att2)
+    //       // const notificationElement = document.getElementById('alertsDropdown');
+    //       // notificationElement.addEventListener("click", readNotifications);
+    //   }, false);
 
-                indicator.appendChild(node);
+      function getTransactions(){
+          $.ajax({
+              url: "queries/getTransacrtions.php.php",
+              type: "get",
+              // data: values ,
+              success: function (response) {
+                  // console.log(response)
+                  const data = $.parseJSON(response);
+                  $('#notificationContent').empty();  
+                  $('#notificationCount').empty();  
 
-                let node2 = document.createElement("div");
-                node2.classList.add("carousel-item");
-                if(key == 0){
-                    node2.classList.add("active");
-                }
+                  $('#notificationCount').append(`<span class="badge badge-danger badge-counter "> ${data.notifications} </span>`);  
 
-                let node3 = document.createElement("img");
-                node3.classList.add("d-block")
-                node3.classList.add("w-100")
-                let att3 = document.createAttribute("src");
-                att3.value = `admin/${el.path}`
-                node3.setAttributeNode(att3)
+                  if(data.transactions.length == 0 ){
+                      const rows = `
+                          <a class="dropdown-item d-flex align-items-center" href="index.php">
+                              <div class="mr-3">
+                                  <div class="icon-circle bg-primary">
+                                      <i class="fas fa-window-close text-white"></i>
+                                  </div>
+                              </div>
+                              <div>
+                                  <span class="font-weight-bold"> No Notifications </span>
+                              </div>
+                          </a>
+                          `;  
+                      $('#notificationContent').append(rows);  
+                  }
+                  $.each(data.transactions, function (i, item) {  
+                      // console.log(item)
+                      if (i == 4) {
+                          return false;
+                      }
+                      const formatDate = new Date(item.created_at);
+                      const rows = `
+                          <a class="dropdown-item d-flex align-items-center" href="index.php">
+                              <div class="mr-3">
+                                  <div class="icon-circle bg-primary">
+                                      <i class="fas fa-file-alt text-white"></i>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="small text-gray-500"> 
+                                      ${formatDate.toDateString()}
+                                  </div>
+                                  <span class="font-weight-bold">Reservation for Room Type - ${item.room_type}!</span>
+                              </div>
+                          </a>
+                          `;  
+                      $('#notificationContent').append(rows);  
+                  });  
 
-                node2.appendChild(node3)
-                inner.appendChild(node2)
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.log(textStatus, errorThrown);
+                  }
+          });
+      }
 
-                console.log(inner)
-            });
+      function readNotifications(){
+          $.ajax({
+              url: "queries/read_notifications.php",
+              type: "post",
+              data: {},
+              success: function (response) {
+                  // console.log(response)
+                  const data = $.parseJSON(response);
+                  $('#notificationCount').empty();  
+                  $('#notificationCount').append(`<span class="badge badge-danger badge-counter "> ${data} </span>`);  
+
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.log(textStatus, errorThrown);
+                  }
+          });
+      }
+
+      function checkReservationValidity(){
+          $.ajax({
+              url: "queries/check_reservation_validity.php",
+              type: "post",
+              data: {},
+              success: function (response) {
+
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.log(textStatus, errorThrown);
+                  }
+          });
+      }
+
+      $(function () {  //> tooltip
+          $('[data-toggle="tooltip"]').tooltip()
+      })
+      
+      function triggerClick(e) {
+          document.querySelector('#image').click();
+      }
+
+      function triggerClickMultiple(e) {
+          document.querySelector('#other_image').click();
+      }
+            
+      function displayImage(e) {
+          if (e.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function(e){
+              document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+              }
+              reader.readAsDataURL(e.files[0]);
+          }
+      }
+
+      function displayOtherImage(e) {
+          if (e.files.length > 0) {
+              document.getElementById('profileDisplay').style.display = "none";
+              // document.getElementById(id).style.visibility = "visible";
+              for (let i = 0; i < e.files.length; i++) {
+                  var reader = new FileReader();
+                  reader.onload = function(e){
+                      const imageElement = document.createElement("img");
+                      imageElement.setAttribute('src', e.target.result);
+                      imageElement.classList.add("imageDisplay");
+                      document.querySelector('#imageDisplay').appendChild(imageElement)
+                  }
+                  reader.readAsDataURL(e.files[i]);
+              }
+          }
+      }
+
+ 
+
+
+        function clearFields(id){
+            const field = document.getElementById(id)
+            field.value = '';
         }
         
         function getRooms(){
             $.ajax({
-                url: "admin/queries/getRooms.php",
+                url: "queries/getRooms.php",
                 type: "post",
                 data: {},
                 success: function (response) {
@@ -145,11 +287,11 @@
 
             if(checkinInput.value) checkinInput.value = '';
             if(checkoutInput.value) checkoutInput.value = '';
-			select.value = room_id
 
+            let room_id = select.value ? select.value : 1
 
             $.ajax({
-                url: "admin/queries/checkRoomAvailDates.php",
+                url: "queries/checkRoomAvailDates.php",
                 type: "post",
                 data: {
                     room_id: room_id
@@ -201,15 +343,15 @@
                                     <div class="card-body container-fluid" >
                                         <div>
                                             <input name="days" type="hidden" class="form-control form-control-user" value="${ daysOfCheckin }">
-                                            <span class="font-weight-bold accordion-title" > ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                                            <span > ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                                         </div>
                                         <!-- <div>
-                                            <span class="font-weight-bold accordion-title"> ₱500 x 1 Additional Bed </span> <span class="float-right"> ₱500 </span> 
+                                            <span > ₱500 x 1 Additional Bed </span> <span class="float-right"> ₱500 </span> 
                                         </div> -->
                                         <hr>
                                         <div>
                                             <input name="bill" type="hidden" class="form-control form-control-user" value="${ eval(selectedRoom.price * daysOfCheckin) }">
-                                            <span class="font-weight-bold accordion-title"> Total before taxes:  </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                                            <span > Total before taxes:  </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                                         </div>
                                     </div>
                                     `;  
@@ -221,7 +363,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
                     alert('Server Error')
-                    // location.reload();
+                    location.reload();
 
                 }
             });
@@ -273,7 +415,7 @@
             if(nextAndPrevDateIsDisabled(checkinInput.value)){
                 refreshDatePicker();
                 checkinInput.value = ''
-                alert('Sorry, Previous or next of selected date is unavalable. ')
+                alert('Sorry, Previous or next of selected date is unavailable. ')
                 return
             }
 
@@ -312,7 +454,9 @@
             setPriceBreakdownContainer()
         }
 
+        
         function setPriceBreakdownContainer(){
+
             const additionalBedInput = document.getElementById('additional_bed');
             const additionalPaxInout = document.getElementById('additinal_pax');
             let rows ;
@@ -326,16 +470,16 @@
                     <div class="card-body container-fluid" >
                         <div>
                             <input name="days" type="hidden" class="form-control form-control-user" value="${ daysOfCheckin }">
-                            <span class="font-weight-bold accordion-title"> ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                            <span > ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                         </div>
                         <div>
-                            <span class="font-weight-bold accordion-title"> 500 x ${additionalBedInput.value} Additional Bed </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(additionalBedInput.value * 500) } </span> 
+                            <span > 500 x ${additionalBedInput.value} Additional Bed </span> <span class="float-right"> ${ eval(additionalBedInput.value * 500) } </span> 
                         </div>
                         <hr>
                         <div>
                             <input name="bill" type="hidden" class="form-control form-control-user" value="${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalBedInput.value * 500)) }">
                             
-                            <span class="font-weight-bold accordion-title" > Total before taxes:  </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalBedInput.value * 500))  } </span> 
+                            <span > Total before taxes:  </span> <span class="float-right"> ${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalBedInput.value * 500))  } </span> 
                         </div>
                     </div>
                     `;  
@@ -348,19 +492,19 @@
                     <div class="card-body container-fluid" >
                         <div>
                             <input name="days" type="hidden" class="form-control form-control-user" value="${ daysOfCheckin }">
-                            <span class="font-weight-bold accordion-title"> ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                            <span > ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                         </div>
                         <div>
-                            <span class="font-weight-bold accordion-title"> 500 x ${additionalBedInput.value} Additional Bed </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(additionalBedInput.value * 500) } </span> 
+                            <span > 500 x ${additionalBedInput.value} Additional Bed </span> <span class="float-right"> ${ eval(additionalBedInput.value * 500) } </span> 
                         </div>
                         <div>
-                            <span class="font-weight-bold accordion-title"> 350 x ${additionalPaxInout.value} Additional Pax </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(additionalPaxInout.value * 350) } </span> 
+                            <span > 350 x ${additionalPaxInout.value} Additional Pax </span> <span class="float-right"> ${ eval(additionalPaxInout.value * 350) } </span> 
                         </div>
                         <hr>
                         <div>
                             <input name="bill" type="hidden" class="form-control form-control-user" value="${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalBedInput.value * 500) +  eval(additionalPaxInout.value * 350)) }">
                             
-                            <span class="font-weight-bold accordion-title"> Total before taxes:  </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalBedInput.value * 500) + eval(additionalPaxInout.value * 350)) } </span> 
+                            <span > Total before taxes:  </span> <span class="float-right"> ${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalBedInput.value * 500) + eval(additionalPaxInout.value * 350)) } </span> 
                         </div>
                     </div>
                     `;  
@@ -372,16 +516,16 @@
                     <div class="card-body container-fluid" >
                         <div>
                             <input name="days" type="hidden" class="form-control form-control-user" value="${ daysOfCheckin }">
-                            <span class="font-weight-bold accordion-title"> ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                            <span > ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                         </div>
                         <div>
-                            <span class="font-weight-bold accordion-title"> 350 x ${additionalPaxInout.value} Additional Pax </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(additionalPaxInout.value * 350) } </span> 
+                            <span > 350 x ${additionalPaxInout.value} Additional Pax </span> <span class="float-right"> ${ eval(additionalPaxInout.value * 350) } </span> 
                         </div>
                         <hr>
                         <div>
                             <input name="bill" type="hidden" class="form-control form-control-user" value="${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalPaxInout.value * 350)) }">
                             
-                            <span class="font-weight-bold accordion-title"> Total before taxes:  </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalPaxInout.value * 350))  } </span> 
+                            <span > Total before taxes:  </span> <span class="float-right"> ${ eval(eval(selectedRoom.price * daysOfCheckin) + eval(additionalPaxInout.value * 350))  } </span> 
                         </div>
                     </div>
                     `;  
@@ -393,7 +537,7 @@
                     <div class="card-body container-fluid" >
                         <div>
                             <input name="days" type="hidden" class="form-control form-control-user" value="${ daysOfCheckin }">
-                            <span class="font-weight-bold accordion-title"> ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                            <span > ${selectedRoom.price} x ${daysOfCheckin} Day(s)/Nights(s) </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                         </div>
                         <!-- <div>
                             <span > ₱500 x 1 Additional Bed </span> <span class="float-right"> ₱500 </span> 
@@ -402,37 +546,25 @@
                         <div>
                             <input name="bill" type="hidden" class="form-control form-control-user" value="${ eval(selectedRoom.price * daysOfCheckin) }">
                             
-                            <span class="font-weight-bold accordion-title"> Total before taxes:  </span> <span class="float-right font-weight-bold accordion-title"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
+                            <span > Total before taxes:  </span> <span class="float-right"> ${ eval(selectedRoom.price * daysOfCheckin) } </span> 
                         </div>
                     </div>
                     `;  
             }
-
+            
             $('#priceBreakdownContainer').append(rows);  
         }
 
+        function checkContactLength(){
+            const contactInput = document.getElementById('contact');
+            if(contactInput.value.length > 11){
+                alert('Input only 11 digits in Contact Form, Thankyou');
+                contactInput.value = '';
+                contactInput.value = '09';
+            }
+        }
 
-</script>
-
+   
+    </script>
   </body>
-
-  <style>
-	
-.float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#3a60ce;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	z-index: 99;
-}
-
-.my-float{
-	margin-top:18px;
-}
-</style>
 </html>

@@ -1,5 +1,23 @@
 <?php
-  require_once('includes/header.php');
+include('includes/header.php');
+
+    spl_autoload_register(function ($class) {
+        include '../models/' . $class . '.php';
+    });
+
+    // header('Content-Type: application/json; charset=utf-8');
+    $msg = '';
+    $status = '';
+    if(isset($_SESSION['success'])){
+        $status = 'success';
+        $msg = $_SESSION['success'];
+        unset($_SESSION['success']);
+        
+    }
+    $id = $_SESSION['client-id'];
+    $conn = new Transaction;
+    $transactions = $conn->getAllUserTransactions($id);
+
 ?>
 
     <div class="container-fluid">
@@ -14,123 +32,73 @@
                 </div>
             </div>
 
-            <?php include('includes/counts.php') ?>
-
-            <div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTransaction">
-                    New Transaction
-                </button>
-            </div>
-
             <div>
                 <hr>
             </div>
 
-		    <table id="datatable" class="display">
-                <thead>
-                    <tr>
-                        <th>Guest Code</th>
-                        <th>Name</th>
-                        <th>Contact No</th>
-                        <th>Room Type</th>
-                        <th>Reserved Date</th>
-                        <th>Check Out Date</th>
-                        <th>Status</th>
-                        <th>Reservation Created</th>
-                        <th>Reservation Valid Until</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($pendings as $key => $value) { ?>
-                    <tr>
-                        <td><?= $value['uuid']?></td>
-                        <td><?= $value['firstname']." ".$value['lastname']?></td>
-                        <td><?= $value['contactno']?></td>
-                        <td><?= $value['room_type']?></td>
-                        <td>
-                            <strong>
-                                <?= $value['checkin'] <= date("Y-m-d", strtotime("+8 HOURS")) 
-                                    ?  "<label style = 'color:#ff0000;'>".date("M d, Y", strtotime($value['checkin']))."</label>" 
-                                    :  "<label style = 'color:#00ff00;'>".date("M d, Y", strtotime($value['checkin']))."</label>" 
-                                ?>
-                            </strong>
-                        </td>
-                        <td><?= "<label style = 'color:#00ff00;'>".date("M d, Y", strtotime($value['checkout']))."</label>";?></td>
-                        <td><?= $value['status']?></td>
-                        <td><?= $value['created_at']?></td>
-                        <td> 
-                            <div>
-                                <?= $value['valid_until']  
-                                    ? '<span class="label label-danger">'. $value['valid_until']. '</span>'
-                                    : '';
-                                ?>
-                            </div>
-                            
-                        </td>
-                        <td>
-                            <div class="form-inline">
-                                <form method="post" action="queries/reservationResource.php" class="mx-1">
-                                    <?=
-                                        new DateTime($value['valid_until']) < new DateTime()
-                                        ?
-                                            ' <button type="button"  class="btn btn-disabled disabled" data-toggle="tooltip" data-placement="top" title="Reservation Expired" disabled>
-                                                <i data-feather="check-circle"></i>
-                                                </button>'
-                                        :
-                                        
-                                            ' 
-                                                <input type="hidden" value="accept" name="resource_type">
-                                                <input type="hidden" value="'. $value['id'] .'" name="transaction_id">
-                                                <button type="submit"  class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Accept Reservation" >
-                                                    <i data-feather="check-circle"></i>
-                                                </button>
-                                            '
-                                    ?>
-                                </form>
-                                
-
-                                <form  method="post" action="queries/reservationResource.php" >
-                                    <?=
-                                        new DateTime($value['valid_until']) < new DateTime()
-                                        ?
-                                            '
-                                                <button type="button"  class="btn btn-disabled disabled" data-toggle="tooltip" data-placement="top" title="Reservation Expired" disabled>
-                                                <i data-feather="edit"></i>
-                                                </button>
-                                            '
-                                            
-                                        :
-                                        
-                                            ' 
-                                                <input type="hidden" value="edit" name="resource_type">
-                                                <input type="hidden" value="'.$value['id'].'" name="transaction_id">
-                                                <button type="submit"  class="btn btn-warning " data-toggle="tooltip" data-placement="top" title="Edit" >
-                                                    <i data-feather="edit"></i>
-                                                </button>
-                                            '
-                                    ?>
-                                    
-                                </form>
-                                <form  method="post" action="queries/reservationResource.php"  class="mx-1">
-                                    <input type="hidden" value="delete" name="resource_type">
-                                    <input type="hidden" value="'. $value['id'].'" name="transaction_id">
-                                    <button type="button"  class="btn btn-danger " data-toggle="tooltip" data-placement="top" title="Delete" >
-                                        <i data-feather="trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                            
-                        </td>
-                    </tr>
-                    <?php }?>
-                </tbody>
-		    </table>
+		    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th> Transaction ID </th>
+                                            <th> Reserved Room </th>
+                                            <th> Status </th>
+                                            <th> Check in </th>
+                                            <th> Check out </th>
+                                            <th> Extra Bed </th>
+                                            <th> Extra Pax </th>
+                                            <th> Bill </th>
+                                            <th> Payment </th>
+                                            <th> Balance </th>
+                                            <th> Valid until </th>
+                                            <th> Actions </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($transactions as $key => $value) {  
+                                            $value = (object) $value;?>
+                                            <tr>
+                                                <td> <?=$value->id ?> </td>
+                                                <td> <?=$value->room_type ?> </td>
+                                                <td> <?=$value->status ?> </td>
+                                                <td> <?=$value->checkin ?> </td>
+                                                <td> <?=$value->checkout ?> </td>
+                                                <td> <?=$value->extra_bed ?> </td>
+                                                <td> <?=$value->extra_pax ?> </td>
+                                                <td> <?=$value->bill ?> </td>
+                                                <td> <?=$value->payment ?> </td>
+                                                <td> <?=$value->balance ?> </td>
+                                                <td> <?=$value->valid_until ?> </td>
+                                                <td>
+                                                    <?php if($value->status == 'Pending'){ ?>
+                                                        <span data-toggle="tooltip" data-placement="top" title="Process Downpayment">
+                                                            <button class="btn btn-info btn-circle" data-toggle="modal" data-target="#paymentModal" onClick="getUserTransaction(<?= $value->id ?>)">
+                                                                <i data-feather="check-circle"></i>
+                                                            </button> 
+                                                        </span>
+                                                    <?php }else if($value->status == 'Reserved' || $value->status == 'Check In'){?>
+                                                        <span>
+                                                            Transaction Reserved/Checkin
+                                                        </span>
+                                                    <?php }else if($value->status == 'Check Out'){?>
+                                                        <span>
+                                                            Transaction Completed
+                                                        </span>
+                                                    <?php }else{?>
+                                                        <span>
+                                                            Transaction Expired / Failed
+                                                        </span>
+                                                    <?php }?>
+                                                </td>
+                                            </tr>
+                                        <?php  } ?>
+                                    </tbody>
+                                </table>
         </main>
       </div>
     </div>
 
 <?php
-  require_once('includes/indexModal.php');
   require_once('includes/footer.php');
+  require_once('includes/indexModal.php');
+
 ?>

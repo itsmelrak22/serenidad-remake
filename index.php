@@ -1,3 +1,12 @@
+<?php
+session_start();
+  
+  if(isset($_SESSION['client-username'])){
+    $clientHasLoggedIn = true;
+  }
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -26,7 +35,20 @@
                   <a class="nav-link active" href="index.php">Home</a>
                   <a class="nav-link" href="reservation.php">Rooms</a>
                   <a class="nav-link" href="aboutUs.php">About Us</a>
-                  <a class="nav-link" href="client-login.php">Login</a>
+
+                  <?php 
+                      if($clientHasLoggedIn){
+                          echo '
+                          <a class="nav-link" href="client-login.php">'.$_SESSION['client-username'].' </a>
+                          ';
+                      }else{
+                          echo 
+                          ' 
+                          <a class="nav-link" href="client-login.php">Login</a>
+                          ';
+                      }
+                  ?>
+                  
               </nav>
               </div>
           </header>
@@ -42,6 +64,8 @@
 
           <footer class="mastfoot mt-auto">
               <div class="inner">
+                <a href="https://www.facebook.com/ss.matabungkay.batangas" target="_blank"><i data-feather="facebook"></i></a>
+                <a href="https://www.instagram.com/ss.matabungkay.batangas" target="_blank"><i data-feather="instagram"></i></a>
               </div>
           </footer>
         </div>
@@ -77,7 +101,7 @@
             <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
           </div>
           <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            <img class="featurette-image img-fluid mx-auto" src="images/main.jpg" alt="Generic placeholder image">
           </div>
         </div>
 
@@ -89,7 +113,7 @@
             <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
           </div>
           <div class="col-md-5 order-md-1">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            <img class="featurette-image img-fluid mx-auto" src="images/main2.jpg" alt="Generic placeholder image">
           </div>
         </div>
 
@@ -101,7 +125,7 @@
             <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
           </div>
           <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            <img class="featurette-image img-fluid mx-auto" src="images/main3.jpg" alt="Generic placeholder image">
           </div>
         </div>
 

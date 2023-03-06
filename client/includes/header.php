@@ -7,15 +7,7 @@ session_start();
 $url_path = $_SERVER['REQUEST_URI'];
 $segments = explode('/', $url_path);
 
-
-$conn = new Transaction;
-$pendings = $conn->getPendingAndExpiredTransactions();
-$reserved = $conn->getReservedTransactions();
-$checkedin = $conn->getCheckInTransactions();
-$checkedout = $conn->getCheckOutTransactions();
-
-require('queries/validateIfLogin.php');
-
+include_once('queries/validateClientLogin.php');
 
 ?>
 
@@ -46,14 +38,14 @@ require('queries/validateIfLogin.php');
 
   <body>
     <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Serenidad Suites</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../index.php">Serenidad Suites</a>
       <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
       <ul class="navbar-nav px-3">
         <li>
-        
-
-          <?= '<a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><p class="accordion-title">'.$_SESSION['login-name'] .' | Sign out</p></a>' ?>
-      </li>
+          <?= '<a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"> 
+                <p class="accordion-title">'.$_SESSION['client-username'] .' | Sign out</p>
+              </a>' ?>
+        </li>
       </ul>
     </nav>
 

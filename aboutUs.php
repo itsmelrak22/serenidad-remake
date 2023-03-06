@@ -1,3 +1,13 @@
+<?php
+session_start();
+  
+  if(isset($_SESSION['client-username'])){
+    $clientHasLoggedIn = true;
+  }
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -144,7 +154,19 @@
                     <a class="nav-link" href="index.php">Home</a>
                     <a class="nav-link" href="reservation.php">Rooms</a>
                     <a class="nav-link active" href="aboutUs.php">About Us</a>
-                    <a class="nav-link" href="client-login.php">Login</a>
+                    
+                  <?php 
+                      if($clientHasLoggedIn){
+                          echo '
+                          <a class="nav-link" href="client-login.php">'.$_SESSION['client-username'].' </a>
+                          ';
+                      }else{
+                          echo 
+                          ' 
+                          <a class="nav-link" href="client-login.php">Login</a>
+                          ';
+                      }
+                  ?>
                 </nav>
                 </div>
             </header>

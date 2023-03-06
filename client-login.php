@@ -1,3 +1,20 @@
+<?php
+session_start();
+if( isset($_SESSION['client-token'])) {
+    header('Location: client/index.php');
+}
+
+$status= '';
+$msg= '';
+if(isset($_SESSION['error'])){
+    $status = 'error';
+    $msg = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -70,7 +87,7 @@
                 </div>
             </header>
             <main role="main" class="inner cover">
-                <form class="form-signin" method="post" action="queries/handleLogin.php">
+                <form class="form-signin" method="post" action="client/queries/handleLogin.php">
                     <h1 class="h3 mb-3 font-weight-normal">Client Login</h1>
 
                     <label for="inputUsername" class="sr-only">Username</label>
