@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 20, 2023 at 02:30 PM
+-- Generation Time: Mar 06, 2023 at 09:18 AM
 -- Server version: 8.0.32
 -- PHP Version: 8.1.16
 
@@ -192,7 +192,8 @@ INSERT INTO `transactions` (`id`, `guest_id`, `room_id`, `room_no`, `extra_bed`,
 (16, 3, 9, NULL, 2, 2, 'Expired', 1, '02/03/2023', NULL, '02/04/2023', NULL, '4200', 0, 0, 0, NULL, '2023-01-30 11:42:04', 0, '2023-01-30 10:42:04', '2023-01-30 10:42:04', NULL),
 (17, 6, 9, NULL, 2, 2, 'Expired', 1, '02/20/2023', NULL, '02/21/2023', NULL, '4200', 0, 0, 0, NULL, '2023-02-19 11:23:20', 0, '2023-02-19 10:23:20', '2023-02-19 10:23:20', NULL),
 (18, 7, 10, NULL, 3, 3, 'Reserved', 2, '02/21/2023', NULL, '02/23/2023', NULL, '6550', 3050, 3500, 0, '2023-02-19 12:46:01', '2023-02-19 13:45:47', 0, '2023-02-19 12:45:47', '2023-02-19 12:46:01', NULL),
-(19, 8, 9, NULL, 3, 3, 'Cancelled', 5, '03/02/2023', NULL, '03/07/2023', NULL, '12500', 5050, 10000, 0, '2023-02-19 14:35:03', '2023-02-19 15:25:45', 0, '2023-02-19 14:25:45', '2023-02-19 14:45:52', 'test');
+(19, 8, 9, NULL, 3, 3, 'Cancelled', 5, '03/02/2023', NULL, '03/07/2023', NULL, '12500', 5050, 10000, 0, '2023-02-19 14:35:03', '2023-02-19 15:25:45', 0, '2023-02-19 14:25:45', '2023-02-19 14:45:52', 'test'),
+(20, 1, 9, NULL, 2, 2, 'Reserved', 1, '03/06/2023', NULL, '03/07/2023', NULL, '4200', 1900, 2300, 0, '2023-03-06 15:13:43', '2023-03-06 15:55:31', 1, '2023-03-06 14:55:31', '2023-03-06 15:13:43', NULL);
 
 --
 -- Indexes for dumped tables
@@ -261,7 +262,7 @@ ALTER TABLE `guest`
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `room_other_images`
@@ -273,7 +274,7 @@ ALTER TABLE `room_other_images`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
