@@ -128,7 +128,7 @@ header('Content-Type: application/json; charset=utf-8');
         if(isset($_POST['client-reserve'])){
             $_SESSION["client-reserve"] = " Transaction Successfuly Reserve";
 
-            header("Location: ../../dashboard/index.php");
+            header("Location: ../../client/index.php");
             exit(0);
         }
 

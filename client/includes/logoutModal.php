@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <form action="queries/handleLogout.php" method="post">
+                    <form action="queries/handleClientLogout.php" method="post">
                         <input type="hidden" value="true" name="toggle-logout">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                         <button class="btn btn-secondary" type="submit" >Logout</button>

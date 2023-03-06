@@ -1,5 +1,6 @@
 <?php
 session_start();
+$clientHasLoggedIn = false;
   
   if(isset($_SESSION['client-username'])){
     $clientHasLoggedIn = true;
