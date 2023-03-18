@@ -27,7 +27,9 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #2B3467;
+  /* background-color: #2B3467; */
+  /* background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%); */
+  background: radial-gradient(circle at 10% 20%, rgb(0, 52, 89) 0%, rgb(0, 168, 232) 90%);
 }
 
 body {
@@ -133,4 +135,21 @@ body {
 .accordion-text{
   color: black;
   font-size: small;
+}
+
+
+.first-color { 
+	background: #edf7fa; 
+}
+	
+.second-color { 
+	background: #5f6caf; 
+}
+
+.third-color { 
+	background: #ffb677; 
+}
+
+.fourth-color { 
+	background: #ff8364; 
 }

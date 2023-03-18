@@ -11,6 +11,11 @@ if(isset($_SESSION['error'])){
     $msg = $_SESSION['error'];
     unset($_SESSION['error']);
 }
+if(isset($_SESSION['username-taken'])){
+    $status = 'username-taken';
+    $msg = $_SESSION['username-taken'];
+    unset($_SESSION['username-taken']);
+}
 
 
 ?>
@@ -86,21 +91,55 @@ if(isset($_SESSION['error'])){
                 </nav>
                 </div>
             </header>
+
             <main role="main" class="inner cover">
-                <form class="form-signin" method="post" action="client/queries/handleLogin.php">
-                    <h1 class="h3 mb-3 font-weight-normal">Client Login</h1>
+                <?php
+                    if($status == 'error'){
+                        echo    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Something Went Wrong!' .$msg.'</strong> .
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>';
+                    }
+                    if($status == 'username-taken'){
+                        echo    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>' .$msg.'</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>';
+                    }
+                ?>
+                <form class="form-signin" method="post" action="client/queries/handleClientRegister.php">
+                    <h1 class="h3 mb-3 font-weight-normal">Register Your Info</h1>
+                    <input name="token" type="hidden" value="<?= base64_encode('Serenidad Suites') ?>">
 
                     <label for="inputUsername" class="sr-only">Username</label>
                     <input type="text" id="inputUsername" class="form-control mb-2" placeholder="Username" name="username" required autofocus>
 
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password" name="password" required>
-                    <input name="token" type="hidden" value="<?= base64_encode('Serenidad Suites') ?>">
+
+                    <label for="confirmPassword" class="sr-only">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control mb-2" placeholder="Password" name="confirm-password" required>
+
+                    <label for="inputFirstname" class="sr-only">Firstname</label>
+                    <input type="text" id="inputFirstname" class="form-control mb-2" placeholder="Firstname" name="firstname" required>
+
+                    <label for="inputMiddlename" class="sr-only">Middlename</label>
+                    <input type="text" id="inputMiddlename" class="form-control mb-2" placeholder="Middlename" name="middlename" required>
+
+                    <label for="inputLastname" class="sr-only">Lastname</label>
+                    <input type="text" id="inputLastname" class="form-control mb-2" placeholder="Lastname" name="lastname" required>
+
+                    <label for="inputContactNo" class="sr-only">Contact No.</label>
+                    <input type="text" id="inputContactNo" class="form-control mb-2" placeholder="Contact No." name="contact_no" required>
 
                     <div class="checkbox mb-3"> </div>
-                    <button class="btn btn-lg btn-primary btn-block mb-2" type="submit">Sign in</button>
-                    <a href="client-register.php">
-                        <button class="btn btn-lg btn-primary btn-block" type="button">Create an Account</button>
+                    <button class="btn btn-lg btn-primary btn-block mb-2" type="submit">Register Now</button>
+                    <a href="client-login.php">
+                        <button class="btn btn-lg btn-primary btn-block" type="button">Back to Login</button>
                     </a>
                 </form>
           </main>

@@ -30,7 +30,7 @@ $clientHasLoggedIn = false;
     <div class="container marketing">
         <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
           <header class="masthead mb-auto">
-              <div class="inner">
+            <div class="inner">
               <h3 class="masthead-brand">Serenidad Suites Online</h3>
               <nav class="nav nav-masthead justify-content-center">
                   <a class="nav-link active" href="index.php">Home</a>
@@ -39,19 +39,14 @@ $clientHasLoggedIn = false;
 
                   <?php 
                       if($clientHasLoggedIn){
-                          echo '
-                          <a class="nav-link" href="client-login.php">'.$_SESSION['client-username'].' </a>
-                          ';
+                          echo ' <a class="nav-link" href="client-login.php">'.$_SESSION['client-username'].' </a> ';
                       }else{
-                          echo 
-                          ' 
-                          <a class="nav-link" href="client-login.php">Login</a>
-                          ';
+                          echo  '  <a class="nav-link" href="client-login.php">Login</a> ';
                       }
                   ?>
                   
               </nav>
-              </div>
+            </div>
           </header>
           <main role="main" class="inner cover">
               <h1 class="cover-heading">SERENIDAD SUITES @MATABUNGKAY BEACH</h1>  
@@ -61,8 +56,6 @@ $clientHasLoggedIn = false;
               </p>
           </main>
 
-          
-
           <footer class="mastfoot mt-auto">
               <div class="inner">
                 <a href="https://www.facebook.com/ss.matabungkay.batangas" target="_blank"><i data-feather="facebook"></i></a>
@@ -71,68 +64,68 @@ $clientHasLoggedIn = false;
           </footer>
         </div>
 
-        <!-- Three columns of text below the carousel -->
-        <div class="row mt-4">
+        <div>
+          <!-- Three columns of text below the carousel -->
+          <div class="row mt-4">
+            <div class="col-lg-4">
+              <img class="" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+              <h2>Great Location</h2>
+            </div><!-- /.col-lg-4 -->
 
-          <div class="col-lg-4">
-            <img class="" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Great Location</h2>
-          </div><!-- /.col-lg-4 -->
-          
-          <div class="col-lg-4">
-            <img class="" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Great Experience</h2>
-          </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+              <img class="" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+              <h2>Great Experience</h2>
+            </div><!-- /.col-lg-4 -->
 
-          <div class="col-lg-4">
-            <img class="" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Dive Right In</h2>
-          </div><!-- /.col-lg-4 -->
-          
-        </div><!-- /.row -->
+            <div class="col-lg-4">
+              <img class="" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+              <h2>Dive Right In</h2>
+            </div><!-- /.col-lg-4 -->
+
+            </div><!-- /.row -->
 
 
-        <!-- START THE FEATURETTES -->
+            <!-- START THE FEATURETTES -->
 
-        <hr class="featurette-divider">
+            <hr class="featurette-divider">
 
-        <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            <div class="row featurette">
+            <div class="col-md-7">
+              <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+              <img class="featurette-image img-fluid mx-auto" src="images/main.jpg" alt="Generic placeholder image">
+            </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+              <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+              <img class="featurette-image img-fluid mx-auto" src="images/main2.jpg" alt="Generic placeholder image">
+            </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+            <div class="col-md-7">
+              <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+              <img class="featurette-image img-fluid mx-auto" src="images/main3.jpg" alt="Generic placeholder image">
+            </div>
           </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" src="images/main.jpg" alt="Generic placeholder image">
-          </div>
+          <hr class="featurette-divider">
+
+          <!-- /END THE FEATURETTES -->
         </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          </div>
-          <div class="col-md-5 order-md-1">
-            <img class="featurette-image img-fluid mx-auto" src="images/main2.jpg" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" src="images/main3.jpg" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <!-- /END THE FEATURETTES -->
 
     </div><!-- /.container -->
 
