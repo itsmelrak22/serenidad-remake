@@ -97,12 +97,22 @@
                                                                         <span class="mx-2 appsLand-text-custom">RESERVE THIS ROOM</span>
                                                                 </button>
                                                             </span>
+                                                            
                                                             ';
                                                         }else{
                                                             echo 
-                                                            '<a href="client-login.php">
-                                                                <button type="button" class="btn btn-sm btn-outline-secondary">Login to Reserve</button>
-                                                            </a>';
+                                                            // <a href="client-login.php">
+                                                            //     <button type="button" class="btn btn-sm btn-outline-secondary">Login to Reserve</button>
+                                                            // </a> style="margin-left: 110px !important;" 
+                                                            
+                                                            '
+                                                            <span  data-toggle="modal" data-target="#reserveModal" onClick="handleReserve('.$room['id'].')">
+                                                                <button class="btn btn-sm btn-outline-secondary">
+                                                                        <span class="mx-2 appsLand-text-custom">RESERVE THIS ROOM</span>
+                                                                </button>
+                                                            </span>
+                                                            '
+                                                            ;
                                                         }
                                                     ?>
                                                 </div>

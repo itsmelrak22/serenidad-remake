@@ -16,7 +16,9 @@
                             <div class="form-group">
                                 <div class="row">
                                     <input name="client-reserve" type="hidden" value="client-reserve">
-                                    <input name="client-id" type="hidden" value="<?= $_SESSION['client-id'] ?>">
+                                    <?php if( $clientHasLoggedIn ) :?>
+                                      <input name="client-id" type="hidden" value="<?= $_SESSION['client-id'] ?>">
+                                    <?php endif ?>
                                     <div class="col-12 mb-3" >
                                         <select name="room_id" style="border-radius: 10rem !important;" class="custom-select form-control" id="select-rooms"  placeholder="Select Room" readonly required onChange="checkRoomAvailability()"></select>
                                     </div>
@@ -58,7 +60,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" >Save changes</button>
+                        <?php if( $clientHasLoggedIn ) :?>
+                          <button type="submit" class="btn btn-primary" >Save changes</button>
+                        <?php else : ?>
+                          <a href="client-login.php">
+                            <button type="button" class="btn btn-disabled" >Login to Reserve</button>
+                          </a>
+                        <?php endif ?>
                     </div>
                 </form>
             </div>
