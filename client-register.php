@@ -122,10 +122,13 @@ if(isset($_SESSION['username-taken'])){
                     <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password" name="password" required>
 
                     <label for="confirmPassword" class="sr-only">Confirm Password</label>
-                    <input type="password" id="confirmPassword" class="form-control mb-2" placeholder="Password" name="confirm-password" required>
+                    <input type="password" id="confirmPassword" class="form-control mb-2" placeholder="Confirm Password" name="confirm-password" required>
 
                     <label for="inputFirstname" class="sr-only">Firstname</label>
                     <input type="text" id="inputFirstname" class="form-control mb-2" placeholder="Firstname" name="firstname" required>
+
+                    <label for="inputEmail" class="sr-only">Email</label>
+                    <input type="text" id="inputEmail" class="form-control mb-2" placeholder="Email" name="email" required>
 
                     <label for="inputMiddlename" class="sr-only">Middlename</label>
                     <input type="text" id="inputMiddlename" class="form-control mb-2" placeholder="Middlename" name="middlename" required>

@@ -7,6 +7,8 @@ spl_autoload_register(function ($class) {
     include '../../models/' . $class . '.php';
 });
 
+include '../SendEmail.php';
+
 $conn = new Transaction();
 $id = $_POST['transaction_id'];
 $today = date('Y-m-d H:i:s');
@@ -59,13 +61,26 @@ switch ($_POST['resource_type']) {
     break;
 
     case 'checkin-confirm':
+            
+
             try {
                 $conn->setQuery("UPDATE `transactions` SET `status`= 'Check In', `updated_at`= '$today' WHERE `id` = $id");
+
+                $emailReceiver = $conn->getUserTransaction($id);
+                $sendEmail = new SendEmail( 
+                    $emailReceiver->email, 
+                    "$emailReceiver->firstname $emailReceiver->middlename $emailReceiver->lastname",
+                    $emailReceiver->checkin,
+                    $emailReceiver->checkout
+                );
 
             } catch (\PDOException $e) {
                 echo $e->getMessage();
                 exit(0);
             }
+
+
+
             
             $_SESSION["success"] = " Transaction Successfuly Checkin!";
             header("Location: ../checkedin.php");

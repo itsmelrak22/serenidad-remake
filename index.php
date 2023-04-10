@@ -52,7 +52,7 @@ $clientHasLoggedIn = false;
               <h1 class="cover-heading">SERENIDAD SUITES @MATABUNGKAY BEACH</h1>  
               <p class="lead">A home away from home, a “10 minute walk” to the beach.</p>
               <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary">BOOK NOW !</a>
+              <a href="reservation.php" class="btn btn-lg btn-secondary">BOOK NOW !</a>
               </p>
           </main>
 

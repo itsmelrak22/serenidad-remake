@@ -38,7 +38,7 @@ Class Transaction extends Model {
     }
 
     public function getUserTransaction($id){
-        return $this->setQuery("SELECT A.*, B.firstname , B.middlename , B.lastname, C.room_type, C.price  FROM `transactions` A 
+        return $this->setQuery("SELECT A.*, B.firstname , B.middlename , B.lastname, B.email, C.room_type, C.price  FROM `transactions` A 
                                 INNER JOIN `guest` B
                                 ON A.guest_id = B.id
                                 INNER JOIN `room` C

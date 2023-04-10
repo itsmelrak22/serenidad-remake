@@ -16,6 +16,7 @@ $firstname = $_POST['firstname'];
 $middlename = $_POST['middlename'];
 $lastname = $_POST['lastname'];
 $contact_no = $_POST['contact_no'];
+$email = $_POST['email'];
 $uuid = uuid4();
 
 
@@ -57,13 +58,14 @@ if(count($checkUsername) > 0){
 }
 
 try {
-    $guest->setQuery("INSERT INTO `guest` (`uuid`, `firstname`, `username`, `password`, `middlename`, `lastname`, `contactno`,  `created_at`, `updated_at`) VALUES ('$uuid', '$firstname', '$username', '$password', '$middlename', '$lastname', '$contact_no', '$today', '$today' )");
+    $guest->setQuery("INSERT INTO `guest` (`uuid`, `firstname`, `username`, `password`, `email`, `middlename`, `lastname`, `contactno`,  `created_at`, `updated_at`) VALUES ('$uuid', '$firstname', '$username', '$password', '$email', '$middlename', '$lastname', '$contact_no', '$today', '$today' )");
 
     $client = $guest->setQuery("SELECT * FROM `guest` WHERE `username` = '$username' AND `password` = '$password'")->getFirst();
     $_SESSION['client-id'] = $client->id;
     $_SESSION['client-name'] = "$client->firstname $client->middlename $client->lastname";
     $_SESSION['client-username'] = $client->username;
     $_SESSION['client-contactno'] = $client->contactno;
+    $_SESSION['client-email'] = $client->email;
     $_SESSION['client-token'] = base64_encode($username).$token;
     header('Location: ../index.php');
 
