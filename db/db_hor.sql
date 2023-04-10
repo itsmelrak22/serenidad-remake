@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 06, 2023 at 09:18 AM
+-- Generation Time: Apr 10, 2023 at 06:56 AM
 -- Server version: 8.0.32
 -- PHP Version: 8.1.16
 
@@ -80,6 +80,7 @@ INSERT INTO `chatbot` (`id`, `messages`, `response`) VALUES
 CREATE TABLE `guest` (
   `id` int NOT NULL,
   `uuid` varchar(255) DEFAULT NULL,
+  `email` varchar(191) DEFAULT NULL,
   `firstname` varchar(50) NOT NULL,
   `username` varchar(191) DEFAULT NULL,
   `password` varchar(191) DEFAULT NULL,
@@ -95,15 +96,8 @@ CREATE TABLE `guest` (
 -- Dumping data for table `guest`
 --
 
-INSERT INTO `guest` (`id`, `uuid`, `firstname`, `username`, `password`, `middlename`, `lastname`, `address`, `contactno`, `created_at`, `updated_at`) VALUES
-(1, '3f944dd6-8416-4bf9-91ad-58b329e14abc', 'client', 'client', 'client', 'client', 'client', NULL, '2312321312', '2023-01-28 22:50:44', '2023-01-28 22:50:44'),
-(2, 'dc4f6a5c-8d3e-472d-9a9b-626efba99123', 'client2', 'client2', 'client2', 'client2', 'client2', NULL, '2312321312', '2023-01-28 22:59:42', '2023-01-28 22:59:42'),
-(3, '83d8b765-4d05-4597-939f-ae5dac444f08', 'rer', 'rer', 'rer', 'wrwr', 'ewrwe', NULL, '09312312341', '2023-01-30 10:21:26', '2023-01-30 10:21:26'),
-(4, '784ca956-5c11-433e-a92b-6ea63bc27b92', 'qwerty', 'qwerty', 'qwerty', 'qwerty', 'qwerty', NULL, '12345678902', '2023-01-30 10:22:54', '2023-01-30 10:22:54'),
-(5, 'f19a57ac-93a7-4db8-809c-02b92c1d8ed7', 'client', 'client', 'client', 'client', 'client', NULL, '12345678901', '2023-01-30 10:28:08', '2023-01-30 10:28:08'),
-(6, 'ad16b5bb-f535-4707-adef-0fbcabf65559', 'karl', 'karl', 'karl', 'karl', 'karl', NULL, '12345678901', '2023-02-19 10:23:20', '2023-02-19 10:23:20'),
-(7, 'fcbaf137-66bb-49f5-adfe-75a8c34120dd', 'karl2', 'karl2', 'karl2', 'karl2', 'karl2', NULL, '12345678901', '2023-02-19 12:45:47', '2023-02-19 12:45:47'),
-(8, '85e65947-4fa8-4a1e-942e-294d7ff1073e', 'test3', 'test3', 'test3', 'test3', 'test3', NULL, '12345678901', '2023-02-19 14:25:45', '2023-02-19 14:25:45');
+INSERT INTO `guest` (`id`, `uuid`, `email`, `firstname`, `username`, `password`, `middlename`, `lastname`, `address`, `contactno`, `created_at`, `updated_at`) VALUES
+(10, '7e9e3ed9-7877-4877-992f-2f9a8f3f9263', 'john@doe.com', 'John', 'client', 'client', 'Test', 'Doe', NULL, '12345678901', '2023-04-10 14:36:03', '2023-04-10 14:36:03');
 
 -- --------------------------------------------------------
 
@@ -185,15 +179,10 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `guest_id`, `room_id`, `room_no`, `extra_bed`, `extra_pax`, `status`, `days`, `checkin`, `checkin_time`, `checkout`, `checkout_time`, `bill`, `balance`, `payment`, `is_payment_full`, `payment_at`, `valid_until`, `is_unread`, `created_at`, `updated_at`, `remarks`) VALUES
-(12, 1, 9, NULL, 2, 2, 'Expired', 2, '01/30/2023', NULL, '02/01/2023', NULL, '6700', 0, 0, 0, NULL, '2023-01-29 12:54:31', 0, '2023-01-29 11:54:31', '2023-01-29 11:54:31', NULL),
-(13, 3, 10, NULL, 2, 2, 'Expired', 1, '01/31/2023', NULL, '02/01/2023', NULL, '3700', 0, 0, 0, NULL, '2023-01-30 11:21:26', 0, '2023-01-30 10:21:26', '2023-01-30 10:21:26', NULL),
-(14, 4, 9, NULL, 3, 3, 'Check In', 1, '01/30/2023', NULL, '01/31/2023', NULL, '5050', 2450, 2600, 0, '2023-01-30 14:43:07', '2023-01-30 11:22:54', 0, '2023-01-30 10:22:54', '2023-02-19 14:11:43', NULL),
-(15, 5, 9, NULL, 3, 3, 'Check Out', 1, '02/01/2023', NULL, '02/02/2023', NULL, '5050', 0, 3999, 0, '2023-02-19 12:44:40', '2023-12-30 11:28:08', 0, '2023-01-30 10:28:08', '2023-02-19 14:24:35', NULL),
-(16, 3, 9, NULL, 2, 2, 'Expired', 1, '02/03/2023', NULL, '02/04/2023', NULL, '4200', 0, 0, 0, NULL, '2023-01-30 11:42:04', 0, '2023-01-30 10:42:04', '2023-01-30 10:42:04', NULL),
-(17, 6, 9, NULL, 2, 2, 'Expired', 1, '02/20/2023', NULL, '02/21/2023', NULL, '4200', 0, 0, 0, NULL, '2023-02-19 11:23:20', 0, '2023-02-19 10:23:20', '2023-02-19 10:23:20', NULL),
-(18, 7, 10, NULL, 3, 3, 'Reserved', 2, '02/21/2023', NULL, '02/23/2023', NULL, '6550', 3050, 3500, 0, '2023-02-19 12:46:01', '2023-02-19 13:45:47', 0, '2023-02-19 12:45:47', '2023-02-19 12:46:01', NULL),
-(19, 8, 9, NULL, 3, 3, 'Cancelled', 5, '03/02/2023', NULL, '03/07/2023', NULL, '12500', 5050, 10000, 0, '2023-02-19 14:35:03', '2023-02-19 15:25:45', 0, '2023-02-19 14:25:45', '2023-02-19 14:45:52', 'test'),
-(20, 1, 9, NULL, 2, 2, 'Reserved', 1, '03/06/2023', NULL, '03/07/2023', NULL, '4200', 1900, 2300, 0, '2023-03-06 15:13:43', '2023-03-06 15:55:31', 1, '2023-03-06 14:55:31', '2023-03-06 15:13:43', NULL);
+(23, 10, 9, NULL, 3, 3, 'Check In', 1, '04/10/2023', NULL, '04/11/2023', NULL, '5050', 2050, 3000, 0, '2023-04-10 14:39:57', '2023-04-10 15:36:46', 1, '2023-04-10 14:36:46', '2023-04-10 14:46:21', NULL),
+(24, 10, 9, NULL, 4, 4, 'Check In', 1, '04/12/2023', NULL, '04/13/2023', NULL, '5900', 1900, 4000, 0, '2023-04-10 14:48:20', '2023-04-10 15:47:54', 1, '2023-04-10 14:47:54', '2023-04-10 14:48:28', NULL),
+(25, 10, 10, NULL, 2, 2, 'Check In', 1, '04/10/2023', NULL, '04/11/2023', NULL, '3700', 1700, 2000, 0, '2023-04-10 14:49:49', '2023-04-10 15:49:36', 1, '2023-04-10 14:49:36', '2023-04-10 14:50:06', NULL),
+(26, 10, 10, NULL, 3, 4, 'Check In', 1, '04/12/2023', NULL, '04/13/2023', NULL, '4900', 2400, 2500, 0, '2023-04-10 14:53:59', '2023-04-10 15:53:44', 1, '2023-04-10 14:53:44', '2023-04-10 14:54:06', NULL);
 
 --
 -- Indexes for dumped tables
@@ -256,7 +245,7 @@ ALTER TABLE `chatbot`
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `room`
@@ -274,7 +263,7 @@ ALTER TABLE `room_other_images`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
