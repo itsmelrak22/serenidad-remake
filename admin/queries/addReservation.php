@@ -5,6 +5,11 @@ date_default_timezone_set('Asia/Manila');
 spl_autoload_register(function ($class) {
     include '../../models/' . $class . '.php';
 });
+
+
+require("../../PHPMailer/src/PHPMailer.php");
+require("../../PHPMailer/src/SMTP.php");
+
 header('Content-Type: application/json; charset=utf-8');
 
 // print_r($_POST);
@@ -96,40 +101,66 @@ header('Content-Type: application/json; charset=utf-8');
         $bill = $_POST['bill'];
         $days = $_POST['days'];
 		$valid_until = date('Y-m-d H:i:s', strtotime('1 Hour'));
+        $reference_no = "SS-".uuid4();
 
-        $fullname = "$firstname $middlename $lastname";
+        if(!isset($_POST['client-reserve'])){
+            $fullname = "$firstname $middlename $lastname";
+        }
         // $days = get_date_difference($check_in, $check_out);
 
         $transaction = new Transaction();
-        $transaction->setQuery("INSERT INTO `transactions` (`guest_id`, `room_id`,  `extra_bed`,  `extra_pax`, `status`, `days`, `checkin`, `checkout`, `bill`, `valid_until`, `created_at`, `updated_at`) 
-                            VALUES ('$client->id', '$room_id',  '$additional_bed', '$additinal_pax', 'Pending', '$days', '$check_in', '$check_out', '$bill', '$valid_until', '$today', '$today' )");
+        $transaction->setQuery("INSERT INTO `transactions` (`guest_id`, `room_id`,  `reference_no`,  `extra_bed`,  `extra_pax`, `status`, `days`, `checkin`, `checkout`, `bill`, `valid_until`, `created_at`, `updated_at`) 
+                            VALUES ('$client->id', '$room_id',  '$reference_no', '$additional_bed', '$additinal_pax', 'Pending', '$days', '$check_in', '$check_out', '$bill', '$valid_until', '$today', '$today' )");
 
        $lastTransactionId = $transaction->getLastInsertedId();
-
+       $emailReceiver = $transaction->getUserTransaction($lastTransactionId);
        $_SESSION["success"] = " Transaction Successfuly Added!";
-        
-    //    generate_pdf(
-    //     $fullname, 
-    //     $today, 
-    //     $lastTransactionId, 
-    //     $uuid, 
-    //     $room->room_type, 
-    //     $check_in, 
-    //     $check_out, 
-    //     $room->price, 
-    //     $days, 
-    //     $bill,
-    //     $valid_until,
-    //     $additional_pax,
-    //     $additional_bed
-
-    // );
 
         if(isset($_POST['client-reserve'])){
-            $_SESSION["client-reserve"] = " Transaction Successfuly Reserve";
+            $mailTo = $emailReceiver->email;
+            $body = "<strong>[DO NOT REPLY, THIS IS SYSTEM GENERATED MESSAGE]</strong> <p>Thank you for choosing Sereniad Suites we're excited to assist you.
+                        <br>
+                        This is your receipt to Serenidad Suites
+                        <br>
+                        Receipt No : $emailReceiver->reference_no
+                        <br>
+                        Date : $emailReceiver->created_at
+                        <br>
+                        Room Name : $emailReceiver->room_type
 
-            header("Location: ../../client/index.php");
-            exit(0);
+                        <br>
+                        <strong>Reminder</strong> 
+                        Please don't delete this email because you need to show this on our staffs upon checking in
+                        </p>";
+            
+            $mail = new PHPMailer\PHPMailer\PHPMailer();
+            // $mail->SMTPDebug = 3;
+            $mail->isSMTP();
+            $mail->Host = "mail.smtp2go.com";
+            $mail->SMTPAuth = true;
+            
+            $mail->Username = "admin.serenidadsuites";
+            $mail->Password = "password";
+            $mail->SMTPSecure = "tls";
+            
+            $mail->Port = "2525";
+            $mail->From = "admin@serenidadsuites2023.online";
+            $mail->FromName = "Serenidad Suites";
+            $mail->addAddress($mailTo, "$emailReceiver->firstname $emailReceiver->middlename $emailReceiver->lastname" );
+            
+            $mail->isHTML('true');
+            $mail->Subject = "Serenidad Suites";
+            $mail->Body = $body;
+            $mail->AltBody = "Serenidad suites body message";
+            
+            if(!$mail->send()){
+                echo "Mailer Error :". $mail->ErrorInfo;
+            }else{
+                $_SESSION["client-reserve"] = " Transaction Successfuly Reserve, An Email Receipt has been sent to your email.";
+                header("Location: ../../client/index.php");
+                exit(0);
+            }
+
         }
 
             header("Location: ../");
@@ -140,6 +171,7 @@ header('Content-Type: application/json; charset=utf-8');
 
        unset($_SESSION['print_pdf']);
        unset($_SESSION['uuid']);
+        $reference_no = "SS-".uuid4();
        unset($_SESSION['fullname']);
        unset($_SESSION['today']);
        unset($_SESSION['transaction_id']);

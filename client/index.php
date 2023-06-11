@@ -18,6 +18,11 @@ include('includes/header.php');
         $msg = $_SESSION['welcome-message'];
         unset($_SESSION['welcome-message']);
     }
+    if(isset($_SESSION['client-reserve'])){
+        $status = 'client-reserve';
+        $msg = $_SESSION['client-reserve'];
+        unset($_SESSION['client-reserve']);
+    }
     $id = $_SESSION['client-id'];
     $conn = new Transaction;
     $transactions = $conn->getAllUserTransactions($id);
@@ -37,7 +42,7 @@ include('includes/header.php');
             </div>
             <?php
                 
-            if($status == 'welcome-message'){
+            if($status == 'welcome-message' || $status == 'client-reserve'){
                 echo    '<div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>' .$msg.'</strong> 
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -114,15 +114,22 @@
 
     function checkPayment(){
         const minDownPayment = eval(+transaction.bill * .5);
-        const inputValue = document.getElementById('payment').value
+        const maxDownPayment = transaction.bill;
+        const inputValue = Number(document.getElementById('payment').value)
         const paymentBtn = document.getElementById('paymentBtn')
 
-        if(inputValue >= minDownPayment){
+        console.log('transaction.bill', transaction.bill)
+        console.log('inputValue', inputValue)
+        console.log(inputValue >= minDownPayment)
+        console.log(inputValue <= maxDownPayment)
+        if (inputValue >= minDownPayment && inputValue <= maxDownPayment) {
             paymentBtn.removeAttribute("disabled");
-            transaction.payment = inputValue
-        }else{
+            transaction.payment = inputValue;
+        } else {
             paymentBtn.setAttribute("disabled", "disabled");
         }
+
+
     }
 
     function togglePaypalDiv() {

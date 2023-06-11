@@ -63,14 +63,13 @@ switch ($_POST['resource_type']) {
 
     case 'checkin-confirm':
 
-        $reference_no = "SS-".uuid4();
 
             try {
-                $conn->setQuery("UPDATE `transactions` SET `status`= 'Check In', `reference_no` = '$reference_no', `updated_at`= '$today' WHERE `id` = $id");
+                $conn->setQuery("UPDATE `transactions` SET `status`= 'Check In', `updated_at`= '$today' WHERE `id` = $id");
                 $emailReceiver = $conn->getUserTransaction($id);
 
                     $mailTo = $emailReceiver->email;
-                    $body = "<strong>[DO NOT REPLY, THIS IS SYSTEM GENERATED MESSAGE]</strong> <p>This is an email sent confirming your reservation in Serenidad Suites for the date $emailReceiver->checkin to $emailReceiver->checkout, reference_no [ $reference_no ] .</p>";
+                    $body = "<strong>[DO NOT REPLY, THIS IS SYSTEM GENERATED MESSAGE]</strong> <p>This is an email sent confirming your reservation in Serenidad Suites for the date $emailReceiver->checkin to $emailReceiver->checkout, reference_no [ $emailReceiver->reference_no ] .</p>";
                     
                     $mail = new PHPMailer\PHPMailer\PHPMailer();
                     // $mail->SMTPDebug = 3;
