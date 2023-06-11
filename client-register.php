@@ -16,6 +16,11 @@ if(isset($_SESSION['username-taken'])){
     $msg = $_SESSION['username-taken'];
     unset($_SESSION['username-taken']);
 }
+if(isset($_SESSION['register-success'])){
+    $status = 'register-success';
+    $msg = $_SESSION['register-success'];
+    unset($_SESSION['register-success']);
+}
 
 
 ?>
@@ -104,6 +109,14 @@ if(isset($_SESSION['username-taken'])){
                     }
                     if($status == 'username-taken'){
                         echo    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>' .$msg.'</strong> 
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>';
+                    }
+                    if($status == 'register-success'){
+                        echo    '<div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <strong>' .$msg.'</strong> 
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

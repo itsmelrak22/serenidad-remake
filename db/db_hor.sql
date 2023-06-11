@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2023 at 06:56 AM
--- Server version: 8.0.32
--- PHP Version: 8.1.16
+-- Generation Time: Jun 05, 2023 at 06:49 PM
+-- Server version: 8.0.33
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -88,6 +88,9 @@ CREATE TABLE `guest` (
   `lastname` varchar(40) NOT NULL,
   `address` varchar(191) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `contactno` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT '0',
+  `verification_code` text,
+  `forgot_pass_code` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -96,8 +99,9 @@ CREATE TABLE `guest` (
 -- Dumping data for table `guest`
 --
 
-INSERT INTO `guest` (`id`, `uuid`, `email`, `firstname`, `username`, `password`, `middlename`, `lastname`, `address`, `contactno`, `created_at`, `updated_at`) VALUES
-(10, '7e9e3ed9-7877-4877-992f-2f9a8f3f9263', 'john@doe.com', 'John', 'client', 'client', 'Test', 'Doe', NULL, '12345678901', '2023-04-10 14:36:03', '2023-04-10 14:36:03');
+INSERT INTO `guest` (`id`, `uuid`, `email`, `firstname`, `username`, `password`, `middlename`, `lastname`, `address`, `contactno`, `is_verified`, `verification_code`, `forgot_pass_code`, `created_at`, `updated_at`) VALUES
+(10, '7e9e3ed9-7877-4877-992f-2f9a8f3f9263', 'john@doe.com', 'John', 'client', 'password', 'Test', 'Doe', NULL, '12345678901', 1, NULL, 'bfa4c735-e7ce-4b81-bcf5-67d25c25ad27', '2023-04-10 14:36:03', '2023-06-06 02:20:57'),
+(18, 'ac7d4252-25e8-4a9e-8778-13ede09a7b88', 'itsmelrak22@gmail.com', 'karl angelo', 'karlangelo', 'new-password', 'brillo', 'Oriel', NULL, '12345678901', 1, 'f5ebd439-5837-4e54-89e7-a1fd5c6f6790', '2fd2076d-dcee-4a72-955d-58729211e98e', '2023-06-05 22:30:09', '2023-06-06 02:22:30');
 
 -- --------------------------------------------------------
 
@@ -153,6 +157,7 @@ CREATE TABLE `transactions` (
   `id` int NOT NULL,
   `guest_id` int NOT NULL,
   `room_id` int NOT NULL,
+  `reference_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `room_no` int DEFAULT NULL,
   `extra_bed` tinyint NOT NULL DEFAULT '0',
   `extra_pax` int DEFAULT NULL,
@@ -178,11 +183,13 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `guest_id`, `room_id`, `room_no`, `extra_bed`, `extra_pax`, `status`, `days`, `checkin`, `checkin_time`, `checkout`, `checkout_time`, `bill`, `balance`, `payment`, `is_payment_full`, `payment_at`, `valid_until`, `is_unread`, `created_at`, `updated_at`, `remarks`) VALUES
-(23, 10, 9, NULL, 3, 3, 'Check In', 1, '04/10/2023', NULL, '04/11/2023', NULL, '5050', 2050, 3000, 0, '2023-04-10 14:39:57', '2023-04-10 15:36:46', 1, '2023-04-10 14:36:46', '2023-04-10 14:46:21', NULL),
-(24, 10, 9, NULL, 4, 4, 'Check In', 1, '04/12/2023', NULL, '04/13/2023', NULL, '5900', 1900, 4000, 0, '2023-04-10 14:48:20', '2023-04-10 15:47:54', 1, '2023-04-10 14:47:54', '2023-04-10 14:48:28', NULL),
-(25, 10, 10, NULL, 2, 2, 'Check In', 1, '04/10/2023', NULL, '04/11/2023', NULL, '3700', 1700, 2000, 0, '2023-04-10 14:49:49', '2023-04-10 15:49:36', 1, '2023-04-10 14:49:36', '2023-04-10 14:50:06', NULL),
-(26, 10, 10, NULL, 3, 4, 'Check In', 1, '04/12/2023', NULL, '04/13/2023', NULL, '4900', 2400, 2500, 0, '2023-04-10 14:53:59', '2023-04-10 15:53:44', 1, '2023-04-10 14:53:44', '2023-04-10 14:54:06', NULL);
+INSERT INTO `transactions` (`id`, `guest_id`, `room_id`, `reference_no`, `room_no`, `extra_bed`, `extra_pax`, `status`, `days`, `checkin`, `checkin_time`, `checkout`, `checkout_time`, `bill`, `balance`, `payment`, `is_payment_full`, `payment_at`, `valid_until`, `is_unread`, `created_at`, `updated_at`, `remarks`) VALUES
+(23, 10, 9, NULL, NULL, 3, 3, 'Check In', 1, '04/10/2023', NULL, '04/11/2023', NULL, '5050', 2050, 3000, 0, '2023-04-10 14:39:57', '2023-04-10 15:36:46', 1, '2023-04-10 14:36:46', '2023-04-10 14:46:21', NULL),
+(24, 10, 9, NULL, NULL, 4, 4, 'Check In', 1, '04/12/2023', NULL, '04/13/2023', NULL, '5900', 1900, 4000, 0, '2023-04-10 14:48:20', '2023-04-10 15:47:54', 1, '2023-04-10 14:47:54', '2023-04-10 14:48:28', NULL),
+(25, 10, 10, NULL, NULL, 2, 2, 'Check In', 1, '04/10/2023', NULL, '04/11/2023', NULL, '3700', 1700, 2000, 0, '2023-04-10 14:49:49', '2023-04-10 15:49:36', 1, '2023-04-10 14:49:36', '2023-04-10 14:50:06', NULL),
+(26, 10, 10, NULL, NULL, 3, 4, 'Check In', 1, '04/12/2023', NULL, '04/13/2023', NULL, '4900', 2400, 2500, 0, '2023-04-10 14:53:59', '2023-04-10 15:53:44', 1, '2023-04-10 14:53:44', '2023-04-10 14:54:06', NULL),
+(27, 10, 9, NULL, NULL, 3, 3, 'Check In', 1, '06/06/2023', NULL, '06/07/2023', NULL, '5050', 2450, 2600, 0, '2023-06-06 02:27:14', '2023-06-06 03:26:20', 1, '2023-06-06 02:26:20', '2023-06-06 02:31:32', NULL),
+(28, 18, 9, 'SS-3d03380c-c320-440c-9f81-bf7af66530b8', NULL, 2, 2, 'Check In', 1, '06/08/2023', NULL, '06/09/2023', NULL, '4200', 1700, 2500, 0, '2023-06-06 02:28:31', '2023-06-06 03:28:15', 1, '2023-06-06 02:28:15', '2023-06-06 02:44:11', NULL);
 
 --
 -- Indexes for dumped tables
@@ -245,7 +252,7 @@ ALTER TABLE `chatbot`
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `room`
@@ -263,7 +270,7 @@ ALTER TABLE `room_other_images`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

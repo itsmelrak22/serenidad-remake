@@ -1,20 +1,18 @@
 <?php
-require("../../PHPMailer/src/PHPMailer.php");
-require("../../PHPMailer/src/SMTP.php");
+require("../PHPMailer/src/PHPMailer.php");
+require("../PHPMailer/src/SMTP.php");
 
-Class SendEmail{
+Class SendVerificationEmail{
 
     private $receiverEmail;
     private $receiverFullname;
-    private $receiverCheckin;
-    private $receiverCheckout;
+    private $verificationCode;
 
 
-    public function __construct($receiverEmail, $receiverFullname, $receiverCheckin = "", $receiverCheckout = ""){
+    public function __construct($receiverEmail, $receiverFullname, $verificationCode){
         $this->receiverEmail = $receiverEmail;
         $this->receiverFullname =  $receiverFullname;
-        $this->receiverCheckin =  $receiverCheckin;
-        $this->receiverCheckout =  $receiverCheckout;
+        $this->verificationCode =  $verificationCode;
 
         $this->sendEmail();
     }

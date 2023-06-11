@@ -1,31 +1,28 @@
 <?php
-require("../../PHPMailer/src/PHPMailer.php");
-require("../../PHPMailer/src/SMTP.php");
+require("PHPMailer/src/PHPMailer.php");
+require("PHPMailer/src/SMTP.php");
 
-Class SendEmail{
+Class SendVerificationEmail{
 
     private $receiverEmail;
     private $receiverFullname;
-    private $receiverCheckin;
-    private $receiverCheckout;
+    private $verificationLink;
 
 
-    public function __construct($receiverEmail, $receiverFullname, $receiverCheckin = "", $receiverCheckout = ""){
+    public function __construct($receiverEmail, $receiverFullname, $verificationLink){
         $this->receiverEmail = $receiverEmail;
         $this->receiverFullname =  $receiverFullname;
-        $this->receiverCheckin =  $receiverCheckin;
-        $this->receiverCheckout =  $receiverCheckout;
-
+        $this->verificationLink =  $verificationLink;
         $this->sendEmail();
     }
 
     public function sendEmail(){
 
         $mailTo = $this->receiverEmail;
-        $body = "<strong>[DO NOT REPLY, THIS IS SYSTEM GENERATED MESSAGE]</strong> <p>This is an email sent confirming your reservation in Serenidad Suites for the date $this->receiverCheckin to $this->receiverCheckout .</p>";
+        $body = "<strong>[DO NOT REPLY, THIS IS SYSTEM GENERATED MESSAGE]</strong> <p>This is an email sent confirming your registration in Serenidad Suites, click the link to verify your email $this->verificationLink.</p>";
         
         $mail = new PHPMailer\PHPMailer\PHPMailer();
-        $mail->SMTPDebug = 3;
+        // $mail->SMTPDebug = 3;
         $mail->isSMTP();
         $mail->Host = "mail.smtp2go.com";
         $mail->SMTPAuth = true;
@@ -53,4 +50,3 @@ Class SendEmail{
     }
 }
     
-// $sendEmail = new SendEmail( 'itsmelrak22@gmail.com', 'test', 'checking time', 'checkout time' );

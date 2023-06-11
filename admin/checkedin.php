@@ -39,6 +39,7 @@
         <table id="datatable" class="display">
 			<thead>
                 <tr>
+                    <th>Reference No.</th>
                     <th>Name</th>
                     <th>Room Type</th>
                     <th>Check In</th>
@@ -56,6 +57,7 @@
                 ?>
 
                 <tr>
+                    <td><?= $value['reference_no']?></td>
                     <td><?= $value['firstname']." ".$value['lastname']?></td>
                     <td><?= $value['room_type']?></td>
                     <td><?= $value['checkin']?></td>

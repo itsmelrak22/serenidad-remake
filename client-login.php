@@ -6,12 +6,11 @@ if( isset($_SESSION['client-token'])) {
 
 $status= '';
 $msg= '';
-if(isset($_SESSION['error'])){
-    $status = 'error';
-    $msg = $_SESSION['error'];
-    unset($_SESSION['error']);
+if(isset($_SESSION['login-failed'])){
+    $status = 'login-failed';
+    $msg = $_SESSION['login-failed'];
+    unset($_SESSION['login-failed']);
 }
-
 
 ?>
 
@@ -87,6 +86,18 @@ if(isset($_SESSION['error'])){
                 </div>
             </header>
             <main role="main" class="inner cover">
+                <div class="mb-1">
+                    <?php 
+                        if($status == 'login-failed'){
+                            echo ' <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>Login Failed!</strong> '.$msg .'
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>';
+                        }
+                    ?>
+                </div>
                 <form class="form-signin" method="post" action="client/queries/handleLogin.php">
                     <h1 class="h3 mb-3 font-weight-normal">Client Login</h1>
 
@@ -101,6 +112,10 @@ if(isset($_SESSION['error'])){
                     <button class="btn btn-lg btn-primary btn-block mb-2" type="submit">Sign in</button>
                     <a href="client-register.php">
                         <button class="btn btn-lg btn-primary btn-block" type="button">Create an Account</button>
+                    </a>
+                    <div class="checkbox mb-3"> </div>
+                    <a href="client-forgot-password.php">
+                        <span>Forgot Password?</span>
                     </a>
                 </form>
           </main>

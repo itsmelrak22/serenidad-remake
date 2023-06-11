@@ -1,6 +1,9 @@
 <?php
   require_once('includes/header.php');
+
+
 ?>
+
 
     <div class="container-fluid">
       <div class="row">
@@ -14,7 +17,10 @@
                 </div>
             </div>
 
-            <?php include('includes/counts.php') ?>
+            <?php 
+            include('includes/counts.php') 
+            ?>
+            
 
             <div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTransaction">

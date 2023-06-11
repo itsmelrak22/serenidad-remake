@@ -19,12 +19,12 @@ if(base64_decode($token) != 'Serenidad Suites'){
 
 
 $conn = new Guest;
-$client = $conn->setQuery("SELECT * FROM `guest` WHERE `username` = '$username' AND `password` = '$password'")->getFirst();
+$client = $conn->setQuery("SELECT * FROM `guest` WHERE `username` = '$username' AND `password` = '$password' AND `is_verified` = 1")->getFirst();
     
 if(!isset($client->id)){
-    $_SESSION['error'] = ' Username or Password does not match our records!';
+    $_SESSION['login-failed'] = ' Username or Password does not match our records or your account is not verified yet!';
     header('Location: ../../client-login.php');
-    exit(0);
+    exit();
 }else{
 
     $_SESSION['client-id'] = $client->id;

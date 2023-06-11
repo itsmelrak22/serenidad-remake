@@ -7,7 +7,8 @@ spl_autoload_register(function ($class) {
     include '../../models/' . $class . '.php';
 });
 
-include '../SendEmail.php';
+require("../../PHPMailer/src/PHPMailer.php");
+require("../../PHPMailer/src/SMTP.php");
 
 $conn = new Transaction();
 $id = $_POST['transaction_id'];
@@ -61,18 +62,42 @@ switch ($_POST['resource_type']) {
     break;
 
     case 'checkin-confirm':
-            
+
+        $reference_no = "SS-".uuid4();
 
             try {
-                $conn->setQuery("UPDATE `transactions` SET `status`= 'Check In', `updated_at`= '$today' WHERE `id` = $id");
-
+                $conn->setQuery("UPDATE `transactions` SET `status`= 'Check In', `reference_no` = '$reference_no', `updated_at`= '$today' WHERE `id` = $id");
                 $emailReceiver = $conn->getUserTransaction($id);
-                $sendEmail = new SendEmail( 
-                    $emailReceiver->email, 
-                    "$emailReceiver->firstname $emailReceiver->middlename $emailReceiver->lastname",
-                    $emailReceiver->checkin,
-                    $emailReceiver->checkout
-                );
+
+                    $mailTo = $emailReceiver->email;
+                    $body = "<strong>[DO NOT REPLY, THIS IS SYSTEM GENERATED MESSAGE]</strong> <p>This is an email sent confirming your reservation in Serenidad Suites for the date $emailReceiver->checkin to $emailReceiver->checkout, reference_no [ $reference_no ] .</p>";
+                    
+                    $mail = new PHPMailer\PHPMailer\PHPMailer();
+                    // $mail->SMTPDebug = 3;
+                    $mail->isSMTP();
+                    $mail->Host = "mail.smtp2go.com";
+                    $mail->SMTPAuth = true;
+                    
+                    $mail->Username = "admin.serenidadsuites";
+                    $mail->Password = "password";
+                    $mail->SMTPSecure = "tls";
+                    
+                    $mail->Port = "2525";
+                    $mail->From = "admin@serenidadsuites2023.online";
+                    $mail->FromName = "Serenidad Suites";
+                    $mail->addAddress($mailTo, "$emailReceiver->firstname $emailReceiver->middlename $emailReceiver->lastname" );
+                    
+                    $mail->isHTML('true');
+                    $mail->Subject = "Serenidad Suites";
+                    $mail->Body = $body;
+                    $mail->AltBody = "Serenidad suites body message";
+                    
+                    if(!$mail->send()){
+                        echo "Mailer Error :". $mail->ErrorInfo;
+                    }else{
+                        $_SESSION["success"] = " Transaction Successfuly Checkin!";
+                        header("Location: ../checkedin.php");
+                    }
 
             } catch (\PDOException $e) {
                 echo $e->getMessage();
@@ -82,8 +107,7 @@ switch ($_POST['resource_type']) {
 
 
             
-            $_SESSION["success"] = " Transaction Successfuly Checkin!";
-            header("Location: ../checkedin.php");
+           
     break;
         
     case 'checkout-confirm':
@@ -179,3 +203,22 @@ switch ($_POST['resource_type']) {
     exit(0);
     
 }
+
+function uuid4() {
+    /* 32 random HEX + space for 4 hyphens */
+    $out = bin2hex(random_bytes(18));
+
+    $out[8]  = "-";
+    $out[13] = "-";
+    $out[18] = "-";
+    $out[23] = "-";
+
+    /* UUID v4 */
+    $out[14] = "4";
+    
+    /* variant 1 - 10xx */
+    $out[19] = ["8", "9", "a", "b"][random_int(0, 3)];
+
+    return $out;
+}
+ 

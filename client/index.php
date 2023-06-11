@@ -12,7 +12,11 @@ include('includes/header.php');
         $status = 'success';
         $msg = $_SESSION['success'];
         unset($_SESSION['success']);
-        
+    }
+    if(isset($_SESSION['welcome-message'])){
+        $status = 'welcome-message';
+        $msg = $_SESSION['welcome-message'];
+        unset($_SESSION['welcome-message']);
     }
     $id = $_SESSION['client-id'];
     $conn = new Transaction;
@@ -31,6 +35,17 @@ include('includes/header.php');
                 <div class="btn-toolbar mb-2 mb-md-0">
                 </div>
             </div>
+            <?php
+                
+            if($status == 'welcome-message'){
+                echo    '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>' .$msg.'</strong> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+            }
+            ?>
 
             <div>
                 <hr>
